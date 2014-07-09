@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Unpack *-ctl-scripts.zip assembly in the TE_BASE/scripts directory -->
+<!-- Add this entry to TE_BASE/config.xml (//organization/standard) -->
+<organization>
+  <name>OGC</name>
+  <standard>
+    <name>OpenSearch Earth Observation Extension</name>
+    <version>
+      <name>1.0 (pending)</name>
+      <suite>
+        <namespace-uri>http://www.opengis.net/cite/osxeo</namespace-uri>
+        <prefix>tns</prefix>
+        <local-name>ets-osxeo-${version}</local-name>
+        <title>OpenSearch Earth Observation Extension 1.0 Conformance Test Suite</title>
+        <description>Checks OpenSearch Earth Observation Extension document for conformance to OGC 13-026.</description>
+      </suite>
+      <revision>
+        <name>${version}</name>
+        <status>Alpha</status>
+        <sources>
+          <source>osxeo/${version}/osxeo-suite.xml</source>
+        </sources>
+        <webdir>osxeo/${version}/web</webdir>
+      </revision>
+    </version>
+  </standard>
+</organization>
