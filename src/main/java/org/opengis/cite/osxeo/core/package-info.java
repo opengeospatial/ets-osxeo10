@@ -1,7 +1,7 @@
 /**
- * Covers the requirements documented in the OpenSearch Geo and Time Extensions
- * 
+ * Covers the requirements documented in the OpenSearch Earth Observation Extension
  *
- * @see "OGC 10-032: OGC OpenSearch Geo and Time Extensions"
+ *
+ * @see "OGC 13-026: OGC OpenSearch Earth Observation Extension"
  */
 package org.opengis.cite.osxeo.core;
