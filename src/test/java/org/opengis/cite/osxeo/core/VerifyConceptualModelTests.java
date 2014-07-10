@@ -49,7 +49,7 @@ public class VerifyConceptualModelTests {
         when(suite.getAttribute(SUBJ)).thenReturn(doc);
         RelaxNGTest iut = new RelaxNGTest();
         iut.setupClassFixture(testContext);
-        iut.setRncFile("/org/opengis/cite/osxeo/schemas/atomgeo.rnc");
+        iut.setRncFile("/org/opengis/cite/osxeo/schemas/atomeo.rnc");
         iut.validateXMLfromRNC();
     }
 
@@ -61,7 +61,7 @@ public class VerifyConceptualModelTests {
         Document doc = docBuilder.parse(this.getClass().getResourceAsStream(
                 "/atom_noid.xml"));
         iut.setTestSubject(doc);
-        iut.setRncFile("/org/opengis/cite/osxeo/schemas/atomgeo.rnc");
+        iut.setRncFile("/org/opengis/cite/osxeo/schemas/atomeo.rnc");
         iut.validateXMLfromRNC();
     }
 }
