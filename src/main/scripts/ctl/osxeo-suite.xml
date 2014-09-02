@@ -286,6 +286,67 @@
     </ctl:code>
   </ctl:test>
 
+  <ctl:test name="tns:EO-Request-Parameters">
+    <ctl:param name="os.description.url"/>
+    <ctl:param name="os.description.doc"/>
+    <ctl:assertion>Verify that the server accepts search parameters from the EO extension</ctl:assertion>
+    <ctl:code>
+      <xsl:choose>
+        <xsl:when test="not($os.description.doc/content/os:OpenSearchDescription/os:Url[(not(@rel) or @rel='' or @rel='results') and @type='application/atom+xml'])">
+          <ctl:message>
+      [ERROR] Unable to execute (no Atom URL template). Skipping test.
+          </ctl:message>
+          <ctl:fail/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:variable name="url" select="$os.description.doc/content/os:OpenSearchDescription/os:Url[(not(@rel) or @rel='' or @rel='results') and @type='application/atom+xml']/@template"/>
+          <xsl:variable name="url-tokens">
+            <xsl:call-template name="tokenize-url-template">
+              <xsl:with-param name="string" select="$url"/>
+              <xsl:with-param name="context" select="$os.description.doc/content/os:OpenSearchDescription"/>
+            </xsl:call-template>
+          </xsl:variable>
+          <xsl:if test="count($url-tokens/token[substring(@type,1,3)='eo:'])=0">
+            <ctl:message>
+            [ERROR] An OpenSearch Description Document must give an URL template form Atom server that accepts search parameters from the EO Extension.
+            </ctl:message>
+            <ctl:fail/>
+          </xsl:if>
+        </xsl:otherwise>
+      </xsl:choose>
+    </ctl:code>
+  </ctl:test>
+
+  <ctl:test name="tns:KVP-Get-Request">
+    <ctl:param name="os.description.url"/>
+    <ctl:param name="os.description.doc"/>
+    <ctl:assertion>Verify that the server accepts search parameters as KVP</ctl:assertion>
+    <ctl:code>
+      <xsl:choose>
+        <xsl:when test="not($os.description.doc/content/os:OpenSearchDescription/os:Url[(not(@rel) or @rel='' or @rel='results') and @type='application/atom+xml'])">
+          <ctl:message>
+      [ERROR] Unable to execute (no Atom URL template). Skipping test.
+          </ctl:message>
+          <ctl:fail/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:variable name="url" select="$os.description.doc/content/os:OpenSearchDescription/os:Url[(not(@rel) or @rel='' or @rel='results') and @type='application/atom+xml']/@template"/>
+          <xsl:variable name="url-tokens">
+            <xsl:call-template name="tokenize-url-template">
+              <xsl:with-param name="string" select="$url"/>
+              <xsl:with-param name="context" select="$os.description.doc/content/os:OpenSearchDescription"/>
+            </xsl:call-template>
+          </xsl:variable>
+          <xsl:if test="count($url-tokens/token)=0">
+            <ctl:message>
+            [ERROR] An OpenSearch Description Document must give an URL template form Atom server that accepts search parameters as KVP.
+            </ctl:message>
+            <ctl:fail/>
+          </xsl:if>
+        </xsl:otherwise>
+      </xsl:choose>
+    </ctl:code>
+  </ctl:test>
 
   <ctl:test name="tns:Simple-Request-Valid">
     <ctl:param name="os.description.url" />
@@ -333,6 +394,20 @@
           </xsl:for-each>
         </xsl:otherwise>
       </xsl:choose>
+    </ctl:code>
+  </ctl:test>
+
+  <ctl:test name="tns:Namespaces">
+    <ctl:param name="os.description.url"/>
+    <ctl:param name="os.description.doc"/>
+    <ctl:assertion>Verify that the server uses the EO extension namespaces</ctl:assertion>
+    <ctl:code>
+      <xsl:if test="count( $os.description.doc/content/os:OpenSearchDescription//namespace::node() [.='http://a9.com/-/opensearch/extensions/eo/1.0/'] ) = 0">
+        <ctl:message>
+  [ERROR] An OpenSearch Description Document must use the EO extension namespace.
+        </ctl:message>
+        <ctl:fail/>
+      </xsl:if>
     </ctl:code>
   </ctl:test>
 
@@ -399,7 +474,19 @@
         <ctl:with-param name="os.description.url" select="$os.description.url"/>
         <ctl:with-param name="os.description.doc" select="$os.description.doc"/>
       </ctl:call-test>
+      <ctl:call-test name="tns:Namespaces">
+        <ctl:with-param name="os.description.url" select="$os.description.url"/>
+        <ctl:with-param name="os.description.doc" select="$os.description.doc"/>
+      </ctl:call-test>
       <ctl:call-test name="tns:Simple-Request-Valid">
+        <ctl:with-param name="os.description.url" select="$os.description.url"/>
+        <ctl:with-param name="os.description.doc" select="$os.description.doc"/>
+      </ctl:call-test>-->
+      <ctl:call-test name="tns:KVP-Get-Request">
+        <ctl:with-param name="os.description.url" select="$os.description.url"/>
+        <ctl:with-param name="os.description.doc" select="$os.description.doc"/>
+      </ctl:call-test>
+      <ctl:call-test name="tns:EO-Request-Parameters">
         <ctl:with-param name="os.description.url" select="$os.description.url"/>
         <ctl:with-param name="os.description.doc" select="$os.description.doc"/>
       </ctl:call-test>
@@ -407,7 +494,7 @@
   </ctl:test>
 
   <ctl:test name="tns:Main">
-    <ctl:assertion>The test subject satisfies the core conformance class.</ctl:assertion>
+    <ctl:assertion>The test subject satisfies the core and additional conformance classes.</ctl:assertion>
     <ctl:code>
       <xsl:variable name="form-data">
         <ctl:form method="POST" width="800" height="600">
@@ -425,12 +512,15 @@
       <ul>
         <li> The server generates a valid OpenSearch description document.</li>
         <li> The server defines an URL template for the Atom response type. </li>
+        <li> Verify that the server uses the EO extension namespaces. </li>
+        <li> Verify that the server response is a valid ATOM document. </li>
+        <li> Verify that the server accepts search parameters as KVP. </li>
+        <li> Verify that the server accepts search parameters from the EO extension. </li>
       </ul>
     </li>
-    <li> <b>Parameter options suggestion</b> : The server implements a list of suggestions for string parameters for the Earth Observation extension elements on the OpenSearch Description document.</li>
-  <li> <b>Parameter range suggestion</b> : The server implements a suggestion of parameters range for the Earth Observation extension elements on the OpenSearch Description document.</li>
-  <li> <b>Earth Observation foreign element</b> : The response includes a eop:EarthObservation element for each entry.</li>
-  <li> <b>INSPIRE</b> : The server supports the INSPIRE relevant OpenSearch parameters (queryables).</li>
+    <li> <b>Earth Observation Foreign Element</b> : Verify that the server response includes a eop:EarthObservation element for each entry.</li>
+    <li> <b>Parameter range suggestion</b> : The server implements a suggestion of parameters range for the Earth Observation extension elements on the OpenSearch Description document.</li>
+    <li> <b>INSPIRE</b> : The server supports the INSPIRE relevant OpenSearch parameters (queryables).</li>
   </ul>
 </div>
 
@@ -457,10 +547,11 @@
       <!-- Populate global variables from form data -->
       <xsl:variable name="os.description.url"
                       select="$form-data/values/value[@key='uri']"/>
-      <!--
+
       <ctl:call-test name="tns:Core">
         <ctl:with-param name="os.description.url" select="$os.description.url"/>
       </ctl:call-test>
+      <!--
       <ctl:call-test name="tns:ConformanceA4">
         <ctl:with-param name="os.description.url" select="$os.description.url"/>
       </ctl:call-test>
