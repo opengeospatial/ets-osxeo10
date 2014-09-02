@@ -4,35 +4,86 @@
 
 namespace eo = "http://a9.com/-/opensearch/extensions/eo/1.0/"
 
- osQueryAttr &= attribute eo:platform { text }?
-    & attribute eo:orbitType { text }?
+ # from Table 3
+ osQueryAttr &=
+      attribute eo:productType { text }?
+    & attribute eo:platform { text }?
+    & attribute eo:platformSerialIdentifier { text }?
     & attribute eo:instrument { text }?
     & attribute eo:sensorType  { text }?
-    & attribute eo:sensorMode {text}?
-    & attribute eo:resolution {floatValueOrSetOrRange}?
-    & attribute eo:swathId {text}?
-    & attribute eo:wavelength {intValueOrSetOrRange }?
-    & attribute eo:spectralRange {text}?
-    & attribute eo:orbitNumber {intValueOrSetOrRange}?
-    & attribute eo:orbitDirection { orbitDirection }?
-    & attribute eo:track { intValueOrSetOrRange }?
-    & attribute eo:frame { intValueOrSetOrRange }?
-    & attribute eo:identifier { text }?
-    & attribute eo:type { text }?
-    & attribute eo:acquisitionType { text }?
-    & attribute eo:status { text }?
-    & attribute eo:archivingCenter { text }?
-    & attribute eo:archivingDate { dateValueOrSetOrRange }?
-    & attribute eo:acquisitionStation { text }?
-    & attribute eo:processingCenter { text }?
-    & attribute eo:processingSoftware { text }?
-    & attribute eo:processingDate { dateValueOrSetOrRange }?
-    & attribute eo:processingLevel { text }?
     & attribute eo:compositeType { text }?
-    & attribute eo:contents {text}?
-    & attribute eo:cloudCover {floatValueOrSetOrRange} *
-    & attribute eo:snowCover {floatValueOrSetOrRange} *
+    & attribute eo:processingLevel { text }?
+    & attribute eo:orbitType { text }?
+    & attribute eo:spectralRange { text }?
+    & attribute eo:wavelength {intValueOrSetOrRange }?
+    & attribute eo:hasSecurityConstraints { text }?
+    & attribute eo:dissemination { text }?
 
+# from Table 4
+osQueryAttr &=
+    attribute eo:title  { text }?
+    & attribute eo:topicCategory  { text }?
+    & attribute eo:keyword  { text }?
+    & attribute eo:abstract  { text }?
+    & attribute eo:denominator { intValueOrSetOrRange }?
+    & attribute eo:distanceValue { floatValueOrSetOrRange }?
+    & attribute eo:distanceUOM { text }?
+    & attribute eo:organizationName { text }?
+    & attribute eo:organizationRole { text }?
+    & attribute eo:lineage { text }?
+    & attribute eo:useLimitation { text }?
+    & attribute eo:accessConstraint { text }?
+    & attribute eo:otherConstraint { text }?
+    & attribute eo:classification { text }?
+    & attribute eo:language { text }?
+    & attribute eo:specificationTitle { text }?
+    & attribute eo:specificationDate { dateValueOrSetOrRange }?
+    & attribute eo:specificationdateType { text }?
+    & attribute eo:degree { text }?
+
+# from Table 5
+osQueryAttr &=
+    attribute eo:parentIdentifier { dateValueOrSetOrRange }?
+  & attribute eo:productionStatus { text }?
+  & attribute eo:acquisitionType { text }?
+  & attribute eo:orbitNumber { intValueOrSetOrRange }?
+  & attribute eo:orbitDirection { orbitDirection }?
+  & attribute eo:track { intValueOrSetOrRange }?
+  & attribute eo:frame { intValueOrSetOrRange }?
+  & attribute eo:swathIdentifier { text }?
+  & attribute eo:cloudCover { intValueOrSetOrRange }?
+  & attribute eo:snowCover { intValueOrSetOrRange }?
+  & attribute eo:productQualityStatus { text }?
+  & attribute eo:productQualityDegradationTag { text }?
+  & attribute eo:processorName { text }?
+  & attribute eo:processingCenter { text }?
+  & attribute eo:processingDate { dateValueOrSetOrRange }?
+  & attribute eo:sensorMode  { text }?
+  & attribute eo:archivingCenter { text }?
+  & attribute eo:processingMode { text }?
+
+# from Table 6
+
+osQueryAttr &=
+  attribute eo:availabilityTime { dateValueOrSetOrRange }?
+  & attribute eo:acquisitionStation { text }?
+  & attribute eo:acquisitionSubType { text }?
+  & attribute eo:startTimeFromAscendingNode { intValueOrSetOrRange }?
+  & attribute eo:completionTimeFromAscendingNode { intValueOrSetOrRange }?
+  & attribute eo:illuminationAzimuthAngle { floatValueOrSetOrRange }?
+  & attribute eo:illuminationZenithAngle { floatValueOrSetOrRange }?
+  & attribute eo:illuminationElevationAngle { floatValueOrSetOrRange }?
+  & attribute eo:polarisationMode { polarisationMode }?
+  & attribute eo:polarizationChannels { text }?
+  & attribute eo:antennaLookDirection { antennaLookDirection }?
+  & attribute eo:minimumIncidenceAngle { floatValueOrSetOrRange }?
+  & attribute eo:maximumIncidenceAngle { floatValueOrSetOrRange }?
+  & attribute eo:dopplerFrequency { floatValueOrSetOrRange }?
+  & attribute eo:incidenceAngleVariation { floatValueOrSetOrRange }?
+
+
+polarisationMode = "S" | "D" | "T" | "Q" | "UNDEFINED"
+antennaLookDirection = "LEFT" | "RIGHT"
 orbitDirection = "DESCENDING" | "ASCENDING"
 
 # Ranges value|\{value(,value)*\}|[\]\[\(\)]value,value[\]\[\(\)]
