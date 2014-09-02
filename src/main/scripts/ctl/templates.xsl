@@ -17,7 +17,7 @@
     Copyright (c) 2014 Terradue
 -->
 
-<xsl:template name="tokenize-url-template">
+  <xsl:template name="tokenize-url-template">
       <xsl:param name="string"/>
       <xsl:param name="separator-start" select="'{'"/>
       <xsl:param name="separator-stop" select="'}'"/>
@@ -26,6 +26,7 @@
         <ns prefix="os">http://a9.com/-/spec/opensearch/1.1/</ns>
         <ns prefix="geo">http://a9.com/-/opensearch/extensions/geo/1.0/</ns>
         <ns prefix="time">http://a9.com/-/opensearch/extensions/time/1.0/</ns>
+        <ns prefix="eo">http://a9.com/-/opensearch/extensions/eo/1.0/</ns>
       </xsl:param>
 
 
