@@ -560,21 +560,18 @@
       <ctl:call-test name="tns:ConformanceA2">
         <ctl:with-param name="os.description.url" select="$os.description.url"/>
       </ctl:call-test>
-<!--
       <ctl:call-test name="tns:ConformanceA3">
         <ctl:with-param name="os.description.url" select="$os.description.url"/>
       </ctl:call-test>
--->
       <ctl:call-test name="tns:ConformanceA4">
         <ctl:with-param name="os.description.url" select="$os.description.url"/>
       </ctl:call-test>
-
+      
     </ctl:code>
   </ctl:test>
 
   <xi:include href="conformanceA2.xml"/>
-  <!--
-  <xi:include href="conformanceA3.xml"/>-->
+  <xi:include href="conformanceA3.xml"/>
   <xi:include href="conformanceA4.xml"/>
   <xsl:template name="tns:testng-report">
     <xsl:param name="results" />
