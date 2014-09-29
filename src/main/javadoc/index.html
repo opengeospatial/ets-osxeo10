@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title>OpenSearch Earth Observation Extension Conformance Test Suite</title>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+body {
+	color: black;
+	background: white;
+	font-family: Georgia, serif;
+}
+
+h1,h2,h3 {
+	font-family: Verdana, sans-serif;
+	color: #000099;
+	text-align: left;
+}
+
+h1 {
+	font-size: 1.4em;
+	margin-top: 2em;
+}
+
+h2 {
+	font-size: 1.2em;
+}
+
+h3 {
+	font-size: 1em;
+	margin-bottom: 0.5em;
+}
+
+table {
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+	border-collapse: collapse;
+}
+
+td,th {
+	padding: 0.25em;
+	border: 1px solid black;
+}
+
+caption,figcaption {
+	font-weight: bold;
+	text-align: left;
+	margin: 0.25em;
+}
+
+th {
+	font-weight: bold;
+	font-family: Verdana, sans-serif;
+	text-align: left;
+	vertical-align: top;
+	background: #eeeeee;
+	color: #000099;
+}
+
+dt {
+	margin-top: 0.5em;
+	font-weight: bold;
+}
+    </style>
+  </head>
+  <body>
+    <h1>OpenSearch Earth Observation Extension Conformance Test Suite</h1>
+    <h2>Scope</h2>
+    <p>This executable test suite (ETS) verifies conformance of OpenSearch Description documents with
+    respect to the specifications:</p>
+    <ul>
+      <li style="list-style:square;"><a href="https://portal.opengeospatial.org/files/?artifact_id=59981&version=1"
+        target="_blank">OGC OpenSearch Earth Observation Extension</a>
+      </li>
+    </ul>
+
+    <p>Several conformance classes are defined and test subject is checked against the following specifications:</p>
+      <ul>
+        <li> OpenSearch Earth Observation Extension (OGC 13-026)</li>
+        <li> The Atom Syndication Format (RFC-4287)</li>
+      </ul>
+      <p>The following conformance classes are defined:</p>
+      <ul>
+        <li><b>Core</b>
+          <ul>
+            <li> The server generates a valid OpenSearch description document.</li>
+            <li> The server defines an URL template for the Atom response type. </li>
+            <li> Verify that the server uses the EO extension namespaces. </li>
+            <li> Verify that the server response is a valid ATOM document. </li>
+            <li> Verify that the server accepts search parameters as KVP. </li>
+            <li> Verify that the server accepts search parameters from the EO extension. </li>
+          </ul>
+        </li>
+        <li> <b>Earth Observation Foreign Element</b> : Verify that the server response includes a eop:EarthObservation element for each entry.</li>
+        <li> <b>Parameter range suggestion</b> : The server implements a suggestion of parameters range for the Earth Observation extension elements on the OpenSearch Description document.</li>
+        <li> <b>INSPIRE</b> : The server supports the INSPIRE relevant OpenSearch parameters (queryables).</li>
+      </ul>
+
+    <p>
+      See the Javadoc documentation for more detailed information about the test classes and test methods
+    that comprise the suite.</p>
+
+    <h2>How to run the tests</h2>
+    <p>The test suite may be run in any of the following environments:</p>
+    <ul>
+<!--      <li style="list-style:square;">Integrated development environment (IDE): The main Java class
+			is <code> TestNGController</code>.
+      </li>
+      <li style="list-style:square;">REST API: Submit a request that includes the necessary
+			arguments to the <a href="../../../../rest/suites/owc/${version}/run"
+			target="_blank" type="application/xml">test run controller</a>
+    </li>-->
+      <li style="list-style:square;">TEAM-Engine: Run the CTL script located in the <code>scripts/osxeo/</code>
+			directory.
+      </li>
+    </ul>
+    <p>
+		The test run arguments are summarized in Table 1. The <em>Obligation</em>
+		descriptor can have the following values: M (mandatory), O (optional),
+		or C (conditional).
+    </p>
+
+    <table border="1" style="border-collapse: collapse;">
+      <caption>Table 1 - Test run arguments</caption>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Value domain</th>
+          <th>Obligation</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>iut</td>
+          <td>URI</td>
+          <td>M</td>
+          <td>A URI that refers to the OpenSearch Description document implementation
+            under test.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Release notes</h2>
+
+    <h3>1.0-r1</h3>
+    <p>Initial release (alpha)</p>
+
+  </body>
+</html>
