@@ -232,6 +232,9 @@
           <xsl:with-param name="request" select="$query"/>
         </xsl:call-template>
       </xsl:variable>
+      <ctl:message>
+      [LOG] <xsl:value-of select="$os.url"/>
+      </ctl:message>
       <xsl:variable name="os.doc">
         <ctl:request>
           <ctl:url>
@@ -383,9 +386,6 @@
             <query status='400' description="an invalid OpenSearch request">
               <token type="os:count">ABC</token>
             </query>
-            <query empty='true' status='200' description="a valid OpenSearch request that returns emtpy">
-              <token type="os:count">0</token>
-            </query>
           </xsl:variable>
           <xsl:for-each select="$queries/query">
             <ctl:call-test name="tns:os-request">
@@ -524,22 +524,23 @@
         <li> Verify that the server accepts search parameters from the EO extension. </li>
       </ul>
     </li>
-    <li> <b>Earth Observation Foreign Element</b> : Verify that the server response includes a eop:EarthObservation element for each entry.</li>
+    <li> <b>Earth Observation Freign Element</b> : Verify that the server response includes a eop:EarthObservation element for each entry.</li>
     <li> <b>Parameter range suggestion</b> : The server implements a suggestion of parameters range for the Earth Observation extension elements on the OpenSearch Description document.</li>
     <li> <b>INSPIRE</b> : The server supports the INSPIRE relevant OpenSearch parameters (queryables).</li>
   </ul>
 </div>
 
 <fieldset style="background:#ccffff">
-  <legend style="font-family: sans-serif; color: #000099;
-       background-color:#F0F8FF; border-style: solid;
-       border-width: medium; padding:4px">Implementation under test</legend>
   <p>
     <label class="form-label" for="uri">
       <h4 style="margin-bottom: 0.5em">Location of OpenSearch Description document
         (absolute http: or file: URI)</h4>
     </label>
     <input id="uri" name="uri" size="96" type="text" value="" />
+    This test will execute the Core Classe, select below the additional Conformance Classes:<br/>
+    <input name="conformance" type="checkbox" value="eop" > Earth Observation Foreign Element </input><br/>
+    <input name="conformance" type="checkbox" value="parameter" > Parameter range suggestion </input><br/>
+    <input name="conformance" type="checkbox" value="inspire" > INSPIRE </input><br/>
   </p>
 </fieldset>
 <p>
@@ -554,19 +555,35 @@
       <xsl:variable name="os.description.url"
                       select="$form-data/values/value[@key='uri']"/>
 
-      <ctl:call-test name="tns:Core">
-        <ctl:with-param name="os.description.url" select="$os.description.url"/>
-      </ctl:call-test>
-      <ctl:call-test name="tns:ConformanceA2">
-        <ctl:with-param name="os.description.url" select="$os.description.url"/>
-      </ctl:call-test>
-      <ctl:call-test name="tns:ConformanceA3">
-        <ctl:with-param name="os.description.url" select="$os.description.url"/>
-      </ctl:call-test>
-      <ctl:call-test name="tns:ConformanceA4">
-        <ctl:with-param name="os.description.url" select="$os.description.url"/>
-      </ctl:call-test>
-      
+      <xsl:variable name="conformance"><xsl:copy-of select="$form-data/values/value[@key='conformance']"/></xsl:variable>
+
+      <xsl:choose>
+        <xsl:when test="$os.description.url!=''">
+          <ctl:call-test name="tns:Core">
+            <ctl:with-param name="os.description.url" select="$os.description.url"/>
+          </ctl:call-test>
+          <xsl:if test="contains($conformance,'eop')">
+            <ctl:call-test name="tns:ConformanceA2">
+              <ctl:with-param name="os.description.url" select="$os.description.url"/>
+            </ctl:call-test>
+          </xsl:if>
+          <xsl:if test="contains($conformance,'parameter')">
+              <ctl:call-test name="tns:ConformanceA3">
+                <ctl:with-param name="os.description.url" select="$os.description.url"/>
+              </ctl:call-test>
+          </xsl:if>
+          <xsl:if test="contains($conformance,'inspire')">
+            <ctl:call-test name="tns:ConformanceA4">
+              <ctl:with-param name="os.description.url" select="$os.description.url"/>
+            </ctl:call-test>
+        </xsl:if>
+        </xsl:when>
+        <xsl:otherwise>
+            <ctl:message>[FAIL] URL for Opensearch Description is emtpy</ctl:message>
+            <ctl:fail/>
+        </xsl:otherwise>
+      </xsl:choose>
+
     </ctl:code>
   </ctl:test>
 
