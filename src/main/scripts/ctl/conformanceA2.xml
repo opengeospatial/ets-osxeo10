@@ -21,7 +21,13 @@
   xmlns:eo="http://a9.com/-/opensearch/extensions/eo/1.0/"
   xmlns:dct="http://purl.org/dc/terms/"
 
-  xmlns:eop= "http://www.opengis.net/eop/2.0"
+  xmlns:eop= "http://www.opengis.net/eop/2.1"
+  xmlns:opt= "http://www.opengis.net/opt/2.1"
+  xmlns:sar= "http://www.opengis.net/sar/2.1"
+  xmlns:atm= "http://www.opengis.net/atm/2.1"
+  xmlns:alt= "http://www.opengis.net/alt/2.1"
+  xmlns:lmb= "http://www.opengis.net/lmb/2.1"
+  xmlns:ssp= "http://www.opengis.net/ssp/2.1"
 
  name="tns:ConformanceA2">
    <ctl:param name="os.description.url">OpenSearch Description URL</ctl:param>

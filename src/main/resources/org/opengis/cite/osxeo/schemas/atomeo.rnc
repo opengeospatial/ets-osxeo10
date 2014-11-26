@@ -7,18 +7,18 @@ namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace atom = "http://www.w3.org/2005/Atom"
 namespace os = "http://a9.com/-/spec/opensearch/1.1/"
 namespace eo = "http://a9.com/-/opensearch/extensions/eo/1.0/"
-namespace eop = "http://www.opengis.net/eop/2.0"
-namespace opt = "http://www.opengis.net/opt/2.0"
-namespace sar = "http://www.opengis.net/sar/2.0"
-namespace atm = "http://www.opengis.net/atm/2.0"
-namespace alt = "http://www.opengis.net/alt/2.0"
-namespace lmb = "http://www.opengis.net/lmb/2.0"
-namespace ssp = "http://www.opengis.net/ssp/2.0"
+namespace eop = "http://www.opengis.net/eop/2.1"
+namespace opt = "http://www.opengis.net/opt/2.1"
+namespace sar = "http://www.opengis.net/sar/2.1"
+namespace atm = "http://www.opengis.net/atm/2.1"
+namespace alt = "http://www.opengis.net/alt/2.1"
+namespace lmb = "http://www.opengis.net/lmb/2.1"
+namespace ssp = "http://www.opengis.net/ssp/2.1"
 namespace local = ""
 
 
 # Redefine atom:entry to include the Earth Observation element defined
-# in OGC 10-157
+# in OGC 10-157r4
 atomEntryConstruct &= eopElements ?
 
 eopElements =  eopElement | optElement | sarElement | atmElement | altElement
