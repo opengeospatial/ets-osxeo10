@@ -31,7 +31,7 @@
 
  name="tns:ConformanceA2">
    <ctl:param name="os.description.url">OpenSearch Description URL</ctl:param>
-  <ctl:assertion>Verify that the server response includes a eop:EarthObservation element for each entry.</ctl:assertion>
+  <ctl:assertion>Verify that the server response includes a eop:EarthObservation and derived elements for each entry.</ctl:assertion>
   <ctl:code>
     <ctl:message>[LOG] <xsl:value-of select="$os.description.url"/></ctl:message>
 
@@ -77,7 +77,7 @@
             <parsers:HTTPParser/>
           </ctl:request>
         </xsl:variable>
-        <xsl:if test=" count($os.doc/response/content/atom:feed/atom:entry) != count($os.doc/response/content/atom:feed/atom:entry/eop:EarthObservation)">
+        <xsl:if test=" count($os.doc/response/content/atom:feed/atom:entry) != count($os.doc/response/content/atom:feed/atom:entry/(eop:EarthObservation|opt:EarthObservation|sar:EarthObservation|atm:EarthObservation|alt:EarthObservation|lmb:EarthObservation|ssp:EarthObservation))">
           <ctl:message>
           [ERROR] Response does not includes an eop:EarthObservation element for each entry.
           </ctl:message>
