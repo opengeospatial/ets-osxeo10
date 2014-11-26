@@ -43,7 +43,7 @@ osQueryAttr &=
 
 # from Table 5
 osQueryAttr &=
-    attribute eo:parentIdentifier { dateValueOrSetOrRange }?
+    attribute eo:parentIdentifier { text }?
   & attribute eo:productionStatus { text }?
   & attribute eo:acquisitionType { text }?
   & attribute eo:orbitNumber { intValueOrSetOrRange }?
